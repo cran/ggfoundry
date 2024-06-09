@@ -78,6 +78,29 @@ geom_casting <- \(mapping = NULL, data = NULL,
   )
 }
 
+#' Get the names of available shapes
+#'
+#' @description `r lifecycle::badge('experimental')`
+#'
+#'   Create a data frame of available shapes and associated sets. This may be
+#'   filtered and used as a vector of strings in `scale_shape_manual`.
+#'
+#' @export
+#'
+#' @return A data frame of available sets and shapes.
+#'
+#' @examples
+#' # Returns a data frame of available shapes
+#' shapes_cast()
+shapes_cast <- \(){
+  df <- data.frame(
+    set = sub("(.*)-.*", "\\1", names(picture_lst)),
+    shape = sub(".*-(.*)_.*", "\\1", names(picture_lst))
+  )
+
+  df[order(df$set, df$shape), ] |> unique()
+}
+
 #' Geom object for casting a shape (not used directly by end user)
 #'
 #' @rdname geom_casting
@@ -95,15 +118,19 @@ GeomCasting <- ggproto("GeomCasting", Geom,
   draw_panel = \(self, data, panel_params, coord,
     na.rm = FALSE, nudge_x = 0, nudge_y = 0) {
     coords <- coord$transform(data, panel_params)
+    coords <- subset(coords, x >= 0 & x <= 1 & y >= 0 & y <= 1)
 
     lst <- split(coords, coords$group)
 
     grobs <- lapply(lst, \(df) {
 
-      valid_shapes <- unique(sub(".*-(.*)_.*", "\\1", names(picture_lst)))
+      valid_shapes <- shapes_cast()$shape
 
       if (is_empty(which(df$shape[1] %in% valid_shapes))) {
-        msg <- paste0("Is this an available shape: '", df$shape[1], "'?")
+        msg <- paste0(
+          df$shape[1],
+          " may be a typo or currently in the development version?"
+          )
         abort(msg)
       }
 

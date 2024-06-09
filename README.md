@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ggfoundry <a href="https://cgoo4.github.io/ggfoundry/"><img src="man/figures/logo.PNG" align="right" height="138" alt="ggfoundry website" /></a>
+# ggfoundry <a href="https://cgoo4.github.io/ggfoundry/"><img src="man/figures/logo.png" align="right" height="138" alt="ggfoundry website" /></a>
 
 <!-- badges: start -->
 
@@ -10,6 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![Codecov test
 coverage](https://codecov.io/gh/cgoo4/ggfoundry/branch/main/graph/badge.svg)](https://app.codecov.io/gh/cgoo4/ggfoundry?branch=main)
 [![R-CMD-check](https://github.com/cgoo4/ggfoundry/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/cgoo4/ggfoundry/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/ggfoundry)](https://CRAN.R-project.org/package=ggfoundry)
 <!-- badges: end -->
 
 Arbitrary hand-crafted fillable shapes for ggplot2.
@@ -28,8 +30,8 @@ To get a bug fix, or to use a feature from the development version, you
 can install ggfoundry from GitHub.
 
 ``` r
-# install.packages("pak")
-pak::pak("cgoo4/ggfoundry")
+# install.packages("devtools")
+devtools::install_github("cgoo4/ggfoundry")
 ```
 
 ## Basic example

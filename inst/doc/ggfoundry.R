@@ -214,43 +214,28 @@ p2 <- p +
 
 p1 + p2 + plot_layout(guides = "collect", axes = "collect")
 
-## ----sets, echo=FALSE, message=FALSE, warning=FALSE---------------------------
+## ----sets, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6-------------
 
-library(tidyr)
 library(dplyr)
+library(forcats)
 library(stringr)
 
-df <- names(ggfoundry:::picture_lst) |>
-  as_tibble() |>
-  mutate(
-    shape = str_extract(value, "(?<=-).*(?=_)"),
-    set = str_extract(value, "^\\w*"),
-    y = as.numeric(factor(set)),
-    .keep = "unused"
-    ) |> 
-  distinct() |> 
-  mutate(x = row_number(), .by = set)
-
-shapes <- df$shape
-
-names(shapes) <- 
-  c("circleF", "circleL", "circleR", 
-    "cross1", "cross2", 
-    "box", "dendro", "ribbon", "violin", 
-    "heptagon", "hexagon", "octagon", "pentagon"
-    )
+df <- shapes_cast() |> 
+  filter(!str_ends(shape, "3|4|5|6")) |> 
+  mutate(x = row_number(), shape = fct_inorder(shape), .by = set)
 
 df |> 
   ggplot(aes(x, set)) +
-  geom_text(aes(label = shape), vjust = 3, colour = "grey70") +
-  geom_casting(aes(shape = shape), size = 0.2, fill = "skyblue") +
-  scale_shape_manual(values = shapes) +
-  scale_x_continuous(expand = expansion(add = 0.33)) +
-  scale_y_discrete(expand = expansion(add = 0.5)) +
-  labs(x = NULL, y = NULL) +
+  geom_text(aes(label = shape), nudge_y = -0.5, colour = "grey70", size = 3) +
+  geom_casting(aes(shape = shape), size = 0.19, fill = "skyblue") +
+  scale_shape_manual(values = as.character(df$shape)) +
+  scale_x_continuous(expand = expansion(add = 0.5)) +
+  scale_y_discrete(expand = expansion(add = 0.7)) +
+  labs(x = NULL, y = NULL, caption = "sunflowers 1-8 available") +
   theme_minimal() +
   theme(
-    axis.text.y = element_text(colour = "grey70", angle = 90, hjust = 0.5),
+    text = element_text(colour = "grey70"),
+    axis.text.y = element_text(angle = 90, hjust = 0.5),
     axis.text.x = element_blank(),
     axis.ticks.x = element_blank(),
     legend.position = "none"
