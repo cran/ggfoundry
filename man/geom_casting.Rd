@@ -126,17 +126,17 @@ graphical objects (grobs) for use in a ggplot2 layer.
 By default, the "violin" shape is used.
 
 If the shape is mapped to a variable, e.g. \code{aes(shape = factor(cyl))}, then
-\code{\link[=scale_shape_manual]{scale_shape_manual()}} is also required to explicitly name the desired
+\code{scale_shape_manual()} is also required to explicitly name the desired
 shapes as a character vector (see examples). This is because standard
 shapes are associated with a number, e.g. a circle is 19, whereas
 \code{geom_casting()} shapes are associated only with character strings.
 
-In addition to the supported aesthetics below, \code{nudge_x} and \code{nudge_y} are
-also respected.
+In addition to the supported aesthetics below, \code{nudge_x}, \code{nudge_y},
+\code{hjust} and \code{vjust} are also respected.
 }
 \section{Aesthetics}{
-
-\code{geom_casting()} understands the following aesthetics (required aesthetics are in bold):
+ \code{geom_casting()} understands the following
+aesthetics (required aesthetics are in bold):
 \itemize{
 \item \strong{\code{x}}
 \item \strong{\code{y}}
@@ -148,8 +148,8 @@ also respected.
 \item \code{shape}
 \item \code{size}
 }
-Learn more about setting these aesthetics
-in \code{vignette("ggplot2-specs")}
+Learn more about setting these aesthetics in
+\code{vignette("ggplot2-specs")}
 }
 
 \examples{
